@@ -18,6 +18,9 @@ class Node:
 
         return ret
 
+    def sumLeaves(self):
+        return '5'
+
 
 #============================= Árvore =============================#
 class BinaryTree:
@@ -36,6 +39,9 @@ class BinaryTree:
         else:
             return (self.root.print_node())
 
+    def hLeaves(self):
+        return (self.root.sumLeaves())
+
 
 tree = BinaryTree(5)
 tree.root.left = Node(7)
@@ -43,3 +49,4 @@ tree.root.right = Node(3)
 tree.root.right.left = Node(6)
 
 print('\n' + tree.print_tree())
+print('\n' + tree.hLeaves())
