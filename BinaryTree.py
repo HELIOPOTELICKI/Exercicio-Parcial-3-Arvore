@@ -1,3 +1,10 @@
+'''
+Exercício parcial 03 [Árvore]
+Dupla: Hélio Potelicki e Pedro Henrique Roweder 
+
+'''
+
+
 # ============================= Nó ============================= #
 class Node:
     def __init__(self, data):
