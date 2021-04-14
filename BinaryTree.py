@@ -1,9 +1,28 @@
-#============================= Nó =============================#
+# ============================= Nó ============================= #
 class Node:
     def __init__(self, data):
         self.data = data
+        self.index = None
         self.left = None
         self.right = None
+
+    def getIndex(self):
+        return (self.index)
+
+    def cal_index(self, count):
+        self.index = count
+
+        if (self.left != None):
+            count -= 1
+            self.left.cal_index(count)
+            count += 1
+
+        if (self.right != None):
+            count += 1
+            self.right.cal_index(count)
+
+    def init_index(self):
+        self.cal_index(0)
 
     def print_node(self):
         ret = '<' + str(self.data)
@@ -19,10 +38,10 @@ class Node:
         return ret
 
     def sumLeaves(self):
-        return '5'
+        return 'not implemented dude'
 
 
-#============================= Árvore =============================#
+# ============================= Árvore ============================= #
 class BinaryTree:
     def __init__(self, data=None, node=None):
         if node:
@@ -39,14 +58,26 @@ class BinaryTree:
         else:
             return (self.root.print_node())
 
+    def index_dict(self):
+        self.root.init_index()
+        return (Node.getIndex(self.root))
+
     def hLeaves(self):
         return (self.root.sumLeaves())
 
 
+# ============================= Main ============================= #
 tree = BinaryTree(5)
 tree.root.left = Node(7)
 tree.root.right = Node(3)
 tree.root.right.left = Node(6)
 
+tree.index_dict()
 print('\n' + tree.print_tree())
-print('\n' + tree.hLeaves())
+
+print(tree.root.getIndex())  #  0
+print(tree.root.left.getIndex())  # -1
+print(tree.root.right.getIndex())  #  1
+print(tree.root.right.left.getIndex())  #  0
+
+#print('\n' + tree.hLeaves())
