@@ -9,20 +9,26 @@ class Node:
     def getIndex(self):
         return (self.index)
 
-    def cal_index(self, count):
+    def cal_index(self, count, tree):
         self.index = count
+        value = tree.amount.get(count)
+
+        if (value is None):
+            tree.amount.update({count: self.data})
+        else:
+            tree.amount.update({count: (value + self.data)})
 
         if (self.left != None):
             count -= 1
-            self.left.cal_index(count)
+            self.left.cal_index(count, tree)
             count += 1
 
         if (self.right != None):
             count += 1
-            self.right.cal_index(count)
+            self.right.cal_index(count, tree)
 
-    def init_index(self):
-        self.cal_index(0)
+    def init_index(self, tree):
+        self.cal_index(0, tree)
 
     def print_node(self):
         ret = '<' + str(self.data)
@@ -37,13 +43,12 @@ class Node:
 
         return ret
 
-    def sumLeaves(self):
-        return 'not implemented dude'
-
 
 # ============================= Árvore ============================= #
 class BinaryTree:
     def __init__(self, data=None, node=None):
+        self.amount = {}
+
         if node:
             self.root = node
         elif data:
@@ -52,6 +57,10 @@ class BinaryTree:
         else:
             self.root = None
 
+    def getAmount(self):
+        return (str(sorted(self.amount.items(),
+                           key=lambda item: item[0]))[1:-1])
+
     def print_tree(self):
         if (not self.root):
             return ('<>')
@@ -59,11 +68,7 @@ class BinaryTree:
             return (self.root.print_node())
 
     def index_dict(self):
-        self.root.init_index()
-        return (Node.getIndex(self.root))
-
-    def hLeaves(self):
-        return (self.root.sumLeaves())
+        self.root.init_index(tree)
 
 
 # ============================= Main ============================= #
@@ -71,13 +76,7 @@ tree = BinaryTree(5)
 tree.root.left = Node(7)
 tree.root.right = Node(3)
 tree.root.right.left = Node(6)
-
 tree.index_dict()
-print('\n' + tree.print_tree())
 
-print(tree.root.getIndex())  #  0
-print(tree.root.left.getIndex())  # -1
-print(tree.root.right.getIndex())  #  1
-print(tree.root.right.left.getIndex())  #  0
-
-#print('\n' + tree.hLeaves())
+print(f'\nÁrvore: {tree.print_tree()}')
+print(f'Contagem das folhas por índice: {tree.getAmount()}')
